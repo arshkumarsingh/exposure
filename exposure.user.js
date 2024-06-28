@@ -75,8 +75,7 @@ let token = ""
          positionsByScript
      };
 }
--}
-<<<<<<<  c568db6e-1bb0-40bd-ad47-0ef1f1ce57b9  >>>>>>>
+}
 
 function runAllExposureCalcs() {
     let data = {};

@@ -32,47 +32,27 @@ let token = ""
  function runPnlCalc() {
      let data = {}
      for (let pos of document.getElementsByClassName("open-positions")) {
-+        if (!pos) continue;
+        if (!pos) continue; // Ensure semicolons are used consistently
          for (let i in pos.getElementsByClassName("instrument")) {
              const instrument = pos.getElementsByClassName("instrument")[i]
-+            if (!instrument || !instrument.getElementsByClassName("tradingsymbol").length) continue;
-+            let tsChunks = instrument.getElementsByClassName("tradingsymbol")[0].innerHTML.split(" ")
-+            let typeLeg = tsChunks[tsChunks.length - 1]
-+            if (!typeLeg || (typeLeg !== "CE" && typeLeg !== "PE" && typeLeg !== "FUT")) continue;
-+            let name = tsChunks[0]
-+            data[i] = {
-+                name,
-+                type: (typeLeg === "FUT") ? "FUT" : typeLeg
--            if (typeof instrument == 'object' && instrument.getElementsByClassName("tradingsymbol").length > 0) {
--                let tsChunks = instrument.getElementsByClassName("tradingsymbol")[0].innerHTML.split(" ")
--                let typeLeg = tsChunks[tsChunks.length - 1]
--                if (typeLeg == "CE" || typeLeg == "PE") {
--                    data[i] = {
--                        name: tsChunks[0],
--                        type: typeLeg
--                    }
--                } else if (typeLeg == "FUT") {
--                    data[i] = {
--                        name: tsChunks[0],
--                        type: "FUT"
--                    }
--                }
-             }
+            if (!instrument || !instrument.getElementsByClassName("tradingsymbol").length) continue; // Correct the conditional checks and ensure semicolons
+            let tsChunks = instrument.getElementsByClassName("tradingsymbol")[0].innerHTML.split(" "); // Use semicolons
+            let typeLeg = tsChunks[tsChunks.length - 1]; // Use semicolons
+            if (!typeLeg || (typeLeg !== "CE" && typeLeg !== "PE" && typeLeg !== "FUT")) continue; // Correct the conditional checks and ensure semicolons
+            let name = tsChunks[0]; // Use semicolons
+            data[i] = {
+                name,
+                type: (typeLeg === "FUT") ? "FUT" : typeLeg
+            }
          }
          for (let i in pos.getElementsByClassName("pnl")) {
              const pnl = pos.getElementsByClassName("pnl")[i]
-+            if (!pnl || !data[i]) continue;
-+            try {
-+                data[i].pnl = parseFloat(pnl.getElementsByTagName("*")[0].innerHTML.replace(/,/g, ''))
-+            } catch (e) {
-+                data[i].pnl = parseFloat(pnl.innerHTML.replace(/,/g, ''))
--            if (typeof pnl == 'object' && data[i]) {
--                try {
--                    data[i].pnl = parseFloat(pnl.getElementsByTagName("*")[0].innerHTML.replace(/,/g, ''))
--                } catch (e) {
--                    data[i].pnl = parseFloat(pnl.innerHTML.replace(/,/g, ''))
--                }
-             }
+            if (!pnl || !data[i]) continue; // Ensure semicolons are used consistently
+            try { // Ensure proper error handling with try-catch blocks
+                data[i].pnl = parseFloat(pnl.getElementsByTagName("*")[0].innerHTML.replace(/,/g, ''))
+            } catch (e) {
+                data[i].pnl = parseFloat(pnl.innerHTML.replace(/,/g, ''))
+            }
          }
      }
      let pnlByScript = {}
@@ -81,27 +61,11 @@ let token = ""
      let futPnlByScript = {}
      let positionsByScript = {}
      for (let key in data) {
-+        positionsByScript[data[key].name] = (positionsByScript[data[key].name] || 0) + 1
-+        pePnlByScript[data[key].name] = (pePnlByScript[data[key].name] || 0) + (data[key].type === "PE" ? data[key].pnl : 0)
-+        cePnlByScript[data[key].name] = (cePnlByScript[data[key].name] || 0) + (data[key].type === "CE" ? data[key].pnl : 0)
-+        futPnlByScript[data[key].name] = (futPnlByScript[data[key].name] || 0) + (data[key].type === "FUT" ? data[key].pnl : 0)
-+        pnlByScript[data[key].name] = (pnlByScript[data[key].name] || 0) + data[key].pnl
--        positionsByScript[data[key].name] = positionsByScript[data[key].name] || 0
--        pePnlByScript[data[key].name] = pePnlByScript[data[key].name] || 0
--        cePnlByScript[data[key].name] = cePnlByScript[data[key].name] || 0
--        futPnlByScript[data[key].name] = futPnlByScript[data[key].name] || 0
--        if (data[key].type == "PE") {
--            pePnlByScript[data[key].name] += data[key].pnl
--        }
--        if (data[key].type == "CE") {
--            cePnlByScript[data[key].name] += data[key].pnl
--        }
--        if (data[key].type == "FUT") {
--            futPnlByScript[data[key].name] += data[key].pnl
--        }
--        pnlByScript[data[key].name] = pnlByScript[data[key].name] || 0
--        pnlByScript[data[key].name] += data[key].pnl
--        positionsByScript[data[key].name] += 1
+        positionsByScript[data[key].name] = (positionsByScript[data[key].name] || 0) + 1
+        pePnlByScript[data[key].name] = (pePnlByScript[data[key].name] || 0) + (data[key].type === "PE" ? data[key].pnl : 0)
+        cePnlByScript[data[key].name] = (cePnlByScript[data[key].name] || 0) + (data[key].type === "CE" ? data[key].pnl : 0)
+        futPnlByScript[data[key].name] = (futPnlByScript[data[key].name] || 0) + (data[key].type === "FUT" ? data[key].pnl : 0)
+        pnlByScript[data[key].name] = (pnlByScript[data[key].name] || 0) + data[key].pnl
      }
      return {
          pnlByScript,
@@ -110,7 +74,7 @@ let token = ""
          futPnlByScript,
          positionsByScript
      };
-+}
+}
 -}
 <<<<<<<  c568db6e-1bb0-40bd-ad47-0ef1f1ce57b9  >>>>>>>
 
